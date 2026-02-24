@@ -1,31 +1,32 @@
-#include <fstream>
-#include <iostream>
-using namespace std;
+#include <stdio.h>
 
-ifstream fin("in.txt");
-
-int prod(const char* s)
+int functie(const char* s)
 {
     int res = 0;
     int i = 0;
-
     while (s[i] != '\0')
     {
         res = res * 10 + (s[i] - '0');
         i++;
     }
-
     return res;
 }
+
 int main()
 {
     int sum = 0, y;
     char x[100];
-    while (fin >> x)
+    FILE* fin = fopen("in.txt", "r");
+    if (fin == NULL) {
+        printf("nu exista fisierul :(\n");
+        return 1;
+    }
+    while (fscanf(fin, "%99s", x) == 1)
     {
-        y = prod(x);
+        y = functie(x);
         sum = sum + y;
     }
-    printf("%d", sum);
+    printf("%d\n", sum);
+    fclose(fin);
     return 0;
 }
